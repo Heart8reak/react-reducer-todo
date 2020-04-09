@@ -30,7 +30,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h3>My Todo App 0.4</h3>
+        <h3 className="lead">My Todo App 0.4</h3>
         < TodoForm addTodo={addTodo} />
         <br />
         <button
