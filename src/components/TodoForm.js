@@ -5,7 +5,11 @@ export function TodoForm(props) {
 
 
     return (
-        <form>
+        <form onSubmit={e => {
+            e.preventDefault()
+            props.addTodo(form)
+            setForm('')
+        }}>
             <input
                 name="todo"
                 placeholder="Things to do"
