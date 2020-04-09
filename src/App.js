@@ -1,26 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useReducer } from 'react';
 import './App.css';
 
+import { TodoForm } from './components/TodoForm'
+import { TodoList } from './components/TodoList'
+import { initialState, reducer } from './reducers/todoReducer';
+
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  console.log(state)
+
+  const addTodo = input => {
+    const newTodo = {
+      todo: input,
+      completed: false,
+      id: Math.random()
+    }
+
+    dispatch({ type: 'ADD_TODO', payload: newTodo })
+  }
+
+  const handleComplete = id => {
+    dispatch({ type: 'COMPLETED_TODO', payload: id })
+  }
+
+  const clearCompleted = id => {
+    dispatch({ type: 'CLEAR_COMPLETED' })
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h3 className="lead">My Todo App 0.4</h3>
+        < TodoForm addTodo={addTodo} />
+        <br />
+        <button
+          type='submit'
+          onClick={e => {
+            e.preventDefault()
+            clearCompleted()
+          }}
+        >Clear</button>
+        <TodoList
+          state={state}
+          handleComplete={handleComplete}
+        />
       </header>
     </div>
   );
 }
 
 export default App;
+
+
